@@ -1394,6 +1394,16 @@ Changelog for ghacupha commons-chain.
 
             ### No issue
 
+            **Added and configured changelog recording mechanism**
+
+
+            [e04714e87e4cd34](https://github.com/ghacupha/commons-chain/commit/e04714e87e4cd34) Edwin Njeru *2018-04-04 14:00:05*
+
+            **Added and configured changelog recording mechanism**
+
+
+            [7e9591bc599f0f8](https://github.com/ghacupha/commons-chain/commit/7e9591bc599f0f8) Edwin Njeru *2018-04-04 13:59:42*
+
             **added java 8 semantics to ContextBase**
 
 

@@ -3,18 +3,18 @@ GET
 0
 HTTP/1.1 200 OK
 24
-Server: GitHub.com
-Date: Wed, 04 Apr 2018 13:49:16 GMT
-Content-Type: application/json; charset=utf-8
 Content-Length: 2
-Status: 200 OK
+X-GitHub-Media-Type: github.v3; format=json
+Server: GitHub.com
+Date: Wed, 04 Apr 2018 13:59:45 GMT
+Content-Type: application/octet-stream
+Status: 304 Not Modified
 X-RateLimit-Limit: 60
-X-RateLimit-Remaining: 55
+X-RateLimit-Remaining: 54
 X-RateLimit-Reset: 1522852735
 Cache-Control: public, max-age=60, s-maxage=60
 Vary: Accept
 ETag: "d751713988987e9331980363e24189ce"
-X-GitHub-Media-Type: github.v3; format=json
 Access-Control-Expose-Headers: ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
 Access-Control-Allow-Origin: *
 Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
@@ -23,10 +23,10 @@ X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Referrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin
 Content-Security-Policy: default-src 'none'
-X-Runtime-rack: 0.028638
-X-GitHub-Request-Id: 1A67:6DA7:8C6E35:142729F:5AC4D7DB
-OkHttp-Sent-Millis: 1522849809580
-OkHttp-Received-Millis: 1522849809881
+X-Runtime-rack: 0.031020
+X-GitHub-Request-Id: 080A:6DA9:15EF9E4:2AB5E50:5AC4DA4B
+OkHttp-Sent-Millis: 1522850438834
+OkHttp-Received-Millis: 1522850439130
 
 TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
 2
