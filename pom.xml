@@ -150,7 +150,7 @@
     <commons.jira.pid>12310462</commons.jira.pid>
     <commons.osgi.import>!javax.portlet,*</commons.osgi.import>
     <commons.osgi.dynamicImport>javax.portlet</commons.osgi.dynamicImport>
-
+    <git-changelog-maven-plugin.version>1.54</git-changelog-maven-plugin.version>
     <commons.surefire-report.aggregate>true</commons.surefire-report.aggregate>
   </properties>
 
@@ -248,6 +248,48 @@
             <goals>
               <goal>checkstyle-aggregate</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Print the change log as release notes...-->
+      <!--Run mvn generate-sources, to use-->
+      <plugin>
+        <groupId>se.bjurr.gitchangelog</groupId>
+        <artifactId>git-changelog-maven-plugin</artifactId>
+        <version>${git-changelog-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>GenerateGitChangelog</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>git-changelog</goal>
+            </goals>
+            <configuration>
+              <!-- A file on filesystem //-->
+              <file>CHANGELOG.md</file>
+              <toRef>trunk</toRef>
+              <templateFile>${project.basedir}/src/assembly/changelog.mustache</templateFile>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Enforce Maven 3.5.0 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce-maven</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireMavenVersion>
+                  <version>3.5.0</version>
+                </requireMavenVersion>
+              </rules>
+            </configuration>
           </execution>
         </executions>
       </plugin>
