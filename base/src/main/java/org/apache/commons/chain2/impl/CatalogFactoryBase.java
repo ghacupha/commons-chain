@@ -57,7 +57,7 @@ public class CatalogFactoryBase<K, V, C extends Map<K, V>> implements CatalogFac
     /**
      * <p>Map of named {@link Catalog}s, keyed by catalog name.</p>
      */
-    private final Map<String, Catalog<K, V, C>> catalogs = new ConcurrentHashMap<String, Catalog<K, V, C>>();
+    private final Map<String, Catalog<K, V, C>> catalogs = new ConcurrentHashMap<>();
 
     // --------------------------------------------------------- Public Methods
 
@@ -153,7 +153,7 @@ public class CatalogFactoryBase<K, V, C extends Map<K, V>> implements CatalogFac
             }
         }
 
-        return catalog.<CMD>getCommand(commandName);
+        return catalog.getCommand(commandName);
     }
 
     // ------------------------------------------------------- Static Variables
@@ -163,7 +163,7 @@ public class CatalogFactoryBase<K, V, C extends Map<K, V>> implements CatalogFac
      * keyed by the relevant class loader.</p>
      */
     private static final Map<ClassLoader, CatalogFactoryBase<?, ?, ? extends Map<?, ?>>> factories =
-            new HashMap<ClassLoader, CatalogFactoryBase<?, ?, ? extends Map<?, ?>>>();
+            new HashMap<>();
 
     // -------------------------------------------------------- Static Methods
 

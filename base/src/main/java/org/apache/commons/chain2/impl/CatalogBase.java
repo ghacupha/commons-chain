@@ -44,7 +44,7 @@ public class CatalogBase<K, V, C extends Map<K, V>> implements Catalog<K, V, C> 
     /**
      * <p>The map of named {@link Command}s, keyed by name.
      */
-    private final Map<String, Command<K, V, C>> commands = new ConcurrentHashMap<String, Command<K, V, C>>();
+    private final Map<String, Command<K, V, C>> commands = new ConcurrentHashMap<>();
 
     // --------------------------------------------------------- Constructors
 

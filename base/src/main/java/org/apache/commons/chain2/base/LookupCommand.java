@@ -59,7 +59,7 @@ public class LookupCommand<K, V, C extends Map<K, V>> implements Filter<K, V, C>
      * @since Chain 1.1
      */
     public LookupCommand() {
-        this(CatalogFactoryBase.<K, V, C>getInstance());
+        this(CatalogFactoryBase.getInstance());
     }
 
     /**

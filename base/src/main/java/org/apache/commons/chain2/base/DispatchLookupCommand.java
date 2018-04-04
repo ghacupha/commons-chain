@@ -87,7 +87,7 @@ public class DispatchLookupCommand<K, V, C extends Context<K, V>>
 
     // ----------------------------------------------------- Instance Variables
 
-    private final WeakHashMap<String, Method> methods = new WeakHashMap<String, Method>();
+    private final WeakHashMap<String, Method> methods = new WeakHashMap<>();
 
     // ------------------------------------------------------------- Properties
 

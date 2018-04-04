@@ -24,6 +24,7 @@ import org.apache.commons.chain2.ChainException;
 import org.apache.commons.chain2.Processing;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -70,13 +71,12 @@ public class ChainBase<K, V, C extends Map<K, V>> implements Chain<K, V, C> {
      *  or one of the individual {@link Command} elements,
      *  is <code>null</code>
      */
+    @SafeVarargs
     public ChainBase(Command<K, V, C>... commands) {
         if (commands == null) {
             throw new IllegalArgumentException();
         }
-        for (Command<K, V, C> command : commands) {
-            addCommand(command);
-        }
+        Arrays.stream(commands).forEachOrdered(this::addCommand);
     }
 
     /**
@@ -93,9 +93,7 @@ public class ChainBase<K, V, C extends Map<K, V>> implements Chain<K, V, C> {
         if (commands == null) {
             throw new IllegalArgumentException();
         }
-        for (Command<K, V, C> command : commands) {
-            addCommand( command );
-        }
+        commands.forEach(this::addCommand);
     }
 
     // ----------------------------------------------------- Instance Variables
@@ -105,7 +103,7 @@ public class ChainBase<K, V, C extends Map<K, V>> implements Chain<K, V, C> {
      * the order in which they may delegate processing to the remainder of
      * the {@link Chain}.</p>
      */
-    private final List<Command<K, V, C>> commands = new ArrayList<Command<K, V, C>>();
+    private final List<Command<K, V, C>> commands = new ArrayList<>();
 
     /**
      * <p>Flag indicating whether the configuration of our commands list
@@ -164,10 +162,11 @@ public class ChainBase<K, V, C extends Map<K, V>> implements Chain<K, V, C> {
         // than Processing.CONTINUE or throws an exception
         Processing saveResult = Processing.CONTINUE;
         Exception saveException = null;
-        int i = 0;
+        int i;
         int n = commands.size();
         Command<K, V, C> lastCommand = null;
-        for (i = 0; i < n; i++) {
+        i = 0;
+        while (i < n) {
             try {
                 lastCommand = commands.get(i);
                 saveResult = lastCommand.execute(context);
@@ -182,6 +181,7 @@ public class ChainBase<K, V, C extends Map<K, V>> implements Chain<K, V, C> {
                 saveException = e;
                 break;
             }
+            i++;
         }
 
         // Call postprocess methods on Filters in reverse order
@@ -190,7 +190,8 @@ public class ChainBase<K, V, C extends Map<K, V>> implements Chain<K, V, C> {
         }
         boolean handled = false;
         boolean result;
-        for (int j = i; j >= 0; j--) {
+        int j = i;
+        while (j >= 0) {
             if (commands.get(j) instanceof Filter) {
                 try {
                     result =
@@ -203,6 +204,7 @@ public class ChainBase<K, V, C extends Map<K, V>> implements Chain<K, V, C> {
                       // Silently ignore
                 }
             }
+            j--;
         }
 
         // Return the exception or result state from the last execute()
@@ -221,6 +223,7 @@ public class ChainBase<K, V, C extends Map<K, V>> implements Chain<K, V, C> {
      * @param failedCommand The command that failed
      * @return Original unhandled exception wrapped in a ChainException
      */
+    @SuppressWarnings("all")
     protected ChainException wrapUnhandledExceptions(Throwable unhandled, C context, Command<K, V, C> failedCommand) {
         /* There should not be a reason to rewrap an exception that is already
          * wrapped in a ChainException because the first wrapping preserves
@@ -248,6 +251,7 @@ public class ChainBase<K, V, C extends Map<K, V>> implements Chain<K, V, C> {
      * false otherwise.
      * @since 2.0
      */
+    @SuppressWarnings("all")
     public boolean isFrozen() {
         return frozen;
     }
