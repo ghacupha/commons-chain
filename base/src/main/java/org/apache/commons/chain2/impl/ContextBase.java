@@ -641,26 +641,6 @@ public class ContextBase extends ContextMap<String, Object> {
 
         private Object value;
 
-        @Override
-        public boolean equals(Object obj) {
-            if (obj == null) {
-                return false;
-            } else if (!(obj instanceof Map.Entry)) {
-                return false;
-            }
-            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
-            if (key == null) {
-                return entry.getKey() == null;
-            }
-            if (key.equals(entry.getKey())) {
-                if (value == null) {
-                    return entry.getValue() == null;
-                }
-                return value.equals(entry.getValue());
-            }
-            return false;
-        }
-
         public String getKey() {
             return this.key;
         }
@@ -670,9 +650,21 @@ public class ContextBase extends ContextMap<String, Object> {
         }
 
         @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            MapEntryImpl mapEntry = (MapEntryImpl) o;
+
+            if (!key.equals(mapEntry.key)) return false;
+            return value.equals(mapEntry.value);
+        }
+
+        @Override
         public int hashCode() {
-            return (key == null ? 0 : key.hashCode())
-                   ^ (value == null ? 0 : value.hashCode());
+            int result = key.hashCode();
+            result = 31 * result + value.hashCode();
+            return result;
         }
 
         public Object setValue(Object value) {
