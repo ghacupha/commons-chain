@@ -23,13 +23,7 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.lang.reflect.Method;
-import java.util.AbstractCollection;
-import java.util.AbstractSet;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <p>Convenience base class for {@link Context} implementations.</p>
@@ -77,7 +71,7 @@ public class ContextBase extends ContextMap<String, Object> {
      * @throws UnsupportedOperationException if a local property does not
      *  have a write method.
      */
-    public ContextBase(Map<? extends String, ? extends Object> map) {
+    public ContextBase(Map<? extends String, ?> map) {
         super(map);
         initialize();
         putAll(map);
@@ -144,13 +138,7 @@ public class ContextBase extends ContextMap<String, Object> {
         if (descriptors == null) {
             super.clear();
         } else {
-            Iterator<String> keys = keySet().iterator();
-            while (keys.hasNext()) {
-                String key = keys.next();
-                if (!descriptors.containsKey(key)) {
-                    keys.remove();
-                }
-            }
+            keySet().removeIf(key -> !descriptors.containsKey(key));
         }
     }
 
@@ -244,7 +232,7 @@ public class ContextBase extends ContextMap<String, Object> {
         }
 
         // Case 3 -- retrieve value from our underlying Map
-        return super.get(key);
+        return super.get(Objects.requireNonNull(key));
     }
 
     /**
@@ -327,7 +315,7 @@ public class ContextBase extends ContextMap<String, Object> {
         }
 
         // Case 3 -- store or replace value in our underlying map
-        return super.put(key, value);
+        return super.put(Objects.requireNonNull(key), value);
     }
 
     /**
@@ -344,10 +332,8 @@ public class ContextBase extends ContextMap<String, Object> {
      *  have both a read method and a write method
      */
     @Override
-    public void putAll(Map<? extends String, ? extends Object> map) {
-        for (Entry<? extends String, ? extends Object> pair : map.entrySet()) {
-            put(pair.getKey(), pair.getValue());
-        }
+    public void putAll(Map<? extends String, ?> map) {
+        map.forEach(this::put);
     }
 
     /**
@@ -378,7 +364,7 @@ public class ContextBase extends ContextMap<String, Object> {
         }
 
         // Case 3 -- remove from underlying Map
-        return super.remove(key);
+        return super.remove(Objects.requireNonNull(key));
     }
 
     /**
@@ -445,7 +431,7 @@ public class ContextBase extends ContextMap<String, Object> {
             // Add descriptor (ignoring getClass() and isEmpty())
             if (!("class".equals(name) || "empty".equals(name))) {
                 if (descriptors == null) {
-                    descriptors = new HashMap<String, PropertyDescriptor>(pd.length - 2);
+                    descriptors = new HashMap<>(pd.length - 2);
                 }
                 descriptors.put(name, propertyDescriptor);
                 super.put(name, singleton);
@@ -531,7 +517,7 @@ public class ContextBase extends ContextMap<String, Object> {
                     ("Property '" + descriptor.getName()
                      + "' is not writeable");
             }
-            method.invoke(this, new Object[] {value});
+            method.invoke(this, value);
         } catch (Exception e) {
             throw new UnsupportedOperationException
                 ("Exception writing property '" + descriptor.getName()
@@ -564,10 +550,7 @@ public class ContextBase extends ContextMap<String, Object> {
             @SuppressWarnings("unchecked")
             Map.Entry<String, Object> entry = (Map.Entry<String, Object>) obj;
             Entry<String, Object> actual = ContextBase.this.entry(entry.getKey());
-            if (actual != null) {
-                return actual.equals(entry);
-            }
-            return false;
+            return actual != null && actual.equals(entry);
         }
 
         @Override
@@ -656,8 +639,7 @@ public class ContextBase extends ContextMap<String, Object> {
 
             MapEntryImpl mapEntry = (MapEntryImpl) o;
 
-            if (!key.equals(mapEntry.key)) return false;
-            return value.equals(mapEntry.value);
+            return key.equals(mapEntry.key) && value.equals(mapEntry.value);
         }
 
         @Override
@@ -749,6 +731,7 @@ public class ContextBase extends ContextMap<String, Object> {
 
         public Object next() {
             entry = ContextBase.this.entry(keys.next());
+            assert entry != null;
             return entry.getValue();
         }
 
