@@ -152,6 +152,8 @@
     <commons.osgi.dynamicImport>javax.portlet</commons.osgi.dynamicImport>
     <git-changelog-maven-plugin.version>1.54</git-changelog-maven-plugin.version>
     <commons.surefire-report.aggregate>true</commons.surefire-report.aggregate>
+    <spotbugs-maven-plugin.version>3.1.0-RC6</spotbugs-maven-plugin.version>
+    <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
   </properties>
 
   <dependencyManagement>
@@ -223,14 +225,14 @@
     </pluginManagement>
 
     <plugins>
-      <plugin>
+      <!--<plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
-          <!--<aggregate>true</aggregate>-->
+          &lt;!&ndash;<aggregate>true</aggregate>&ndash;&gt;
           <excludePackageNames>org.apache.commons.chain2.cookbook:org.apache.commons.chain2.apps</excludePackageNames>
         </configuration>
-      </plugin>
+      </plugin>-->
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -293,6 +295,68 @@
           </execution>
         </executions>
       </plugin>
+        <!-- Setup Javadoc jar -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+                <execution>
+                    <id>attach-javadocs</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>jar</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        <!-- Setup source jar -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+                <execution>
+                    <id>attach-sources</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>jar-no-fork</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        <!-- Setup spotbugs dependency, would normally only be in reporting section -->
+        <plugin>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-maven-plugin</artifactId>
+            <version>${spotbugs-maven-plugin.version}</version>
+            <dependencies>
+                <dependency>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs</artifactId>
+                    <version>3.1.0</version>
+                </dependency>
+            </dependencies>
+        </plugin>
+        <!-- Setup JaCoCo code coverage -->
+        <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${jacoco-maven-plugin.version}</version>
+            <executions>
+                <execution>
+                    <id>jacoco-initialize</id>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>jacoco-site</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>report</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
     </plugins>
   </build>
 

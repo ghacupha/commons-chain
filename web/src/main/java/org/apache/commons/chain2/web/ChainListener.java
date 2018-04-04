@@ -57,8 +57,7 @@ import org.apache.commons.logging.LogFactory;
  *     contain <code>&lt;catalog&gt;</code> elements (which will
  *     cause registration of the created {@link Catalog}s into
  *     the {@link CatalogFactoryBase} for this application, and no
- *     servlet context attribute will be created.
- *     <strong>NOTE</strong> - This parameter is deprecated.</p>
+ *     servlet context attribute will be created.</li>
  * <li><strong>org.apache.commons.chain2.RULE_SET</strong> -
  *     Fully qualified class name of a Digester <code>RuleSet</code>
  *     implementation to use for parsing configuration resources (this
@@ -106,6 +105,7 @@ public class ChainListener implements ServletContextListener {
      * servlet context attribute under which our resulting {@link Catalog}
      * will be stored.</p>
      */
+    @Deprecated
     public static final String CONFIG_ATTR =
         "org.apache.commons.chain2.CONFIG_ATTR";
 

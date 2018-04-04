@@ -1397,6 +1397,11 @@ Changelog for ghacupha commons-chain.
             **Added and configured changelog recording mechanism**
 
 
+            [45064279be55bc1](https://github.com/ghacupha/commons-chain/commit/45064279be55bc1) Edwin Njeru *2018-04-04 14:07:34*
+
+            **Added and configured changelog recording mechanism**
+
+
             [e04714e87e4cd34](https://github.com/ghacupha/commons-chain/commit/e04714e87e4cd34) Edwin Njeru *2018-04-04 14:00:05*
 
             **Added and configured changelog recording mechanism**

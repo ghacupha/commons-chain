@@ -55,7 +55,7 @@ import org.apache.commons.logging.LogFactory;
  *     cause registration of the created {@link Catalog}s into
  *     the {@link CatalogFactoryBase} for this application, and no
  *     servet context attribute will be created.
- *     <strong>NOTE</strong> - This parameter is deprecated.</p>
+ *     <strong>NOTE</strong> - This parameter is deprecated.
  * <li><strong>org.apache.commons.chain2.RULE_SET</strong> -
  *     Fully qualified class name of a Digester <code>RuleSet</code>
  *     implementation to use for parsing configuration resources (this

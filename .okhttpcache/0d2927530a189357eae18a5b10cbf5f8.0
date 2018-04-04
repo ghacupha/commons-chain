@@ -6,12 +6,12 @@ HTTP/1.1 200 OK
 Content-Length: 2
 X-GitHub-Media-Type: github.v3; format=json
 Server: GitHub.com
-Date: Wed, 04 Apr 2018 13:59:45 GMT
+Date: Wed, 04 Apr 2018 16:18:42 GMT
 Content-Type: application/octet-stream
 Status: 304 Not Modified
 X-RateLimit-Limit: 60
-X-RateLimit-Remaining: 54
-X-RateLimit-Reset: 1522852735
+X-RateLimit-Remaining: 60
+X-RateLimit-Reset: 1522862322
 Cache-Control: public, max-age=60, s-maxage=60
 Vary: Accept
 ETag: "d751713988987e9331980363e24189ce"
@@ -23,10 +23,10 @@ X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Referrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin
 Content-Security-Policy: default-src 'none'
-X-Runtime-rack: 0.031020
-X-GitHub-Request-Id: 080A:6DA9:15EF9E4:2AB5E50:5AC4DA4B
-OkHttp-Sent-Millis: 1522850438834
-OkHttp-Received-Millis: 1522850439130
+X-Runtime-rack: 0.030025
+X-GitHub-Request-Id: 06A1:6DA7:97B873:15B845B:5AC4FAD7
+OkHttp-Sent-Millis: 1522858774653
+OkHttp-Received-Millis: 1522858774944
 
 TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
 2
